@@ -1,0 +1,246 @@
+/* --- Reset & Core Styling --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f8fafc;
+    color: #0f172a;
+    padding: 20px;
+}
+
+/* Header & Categories Layout */
+.gallery-header {
+    text-align: center;
+    margin: 40px auto;
+    max-width: 600px;
+}
+
+.gallery-header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.05em;
+}
+
+.gallery-header p {
+    color: #64748b;
+    margin-bottom: 30px;
+}
+
+.filter-controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background-color: #ffffff;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    padding: 10px 22px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filter-btn:hover, 
+.filter-btn.active {
+    background-color: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.15);
+}
+
+/* --- Responsive Layout Engine --- */
+.gallery-container {
+    display: grid;
+    /* Clean fallback logic that naturally flows down columns on phones */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* Gallery Items */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    
+    /* Configured curves for card filtering animations */
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.4s ease;
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* CSS Filter State for Class Removals */
+.gallery-item.hidden {
+    opacity: 0;
+    transform: scale(0.85);
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Image Filters & Interactive Scale transitions */
+.gallery-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+    /* Subtle modern desaturation filter out-of-the-box */
+    filter: grayscale(15%) contrast(102%);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                filter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover Adjustments */
+.gallery-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.06);
+    filter: grayscale(0%) contrast(100%); /* Snaps to full brilliant output */
+}
+
+/* Captions Overlay sliding up from the base */
+.caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0));
+    color: #ffffff;
+    padding: 24px 20px;
+    font-size: 1.15rem;
+    font-weight: 500;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item:hover .caption {
+    transform: translateY(0);
+}
+
+/* --- Full Screen Overlay (Lightbox) --- */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.98);
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.lightbox.active {
+    display: flex;
+    opacity: 1;
+}
+
+.lightbox-content {
+    max-width: 85%;
+    max-height: 80%;
+    text-align: center;
+}
+
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 75vh;
+    border-radius: 8px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+#lightbox-caption {
+    color: #f1f5f9;
+    margin-top: 20px;
+    font-size: 1.3rem;
+    font-weight: 400;
+    letter-spacing: 0.025em;
+}
+
+/* UI Positioning Elements */
+.close-btn {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    color: #94a3b8;
+    font-size: 45px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-btn:hover { color: #ffffff; }
+
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #cbd5e1;
+    font-size: 1.5rem;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}
+
+.prev-btn { left: 35px; }
+.next-btn { right: 35px; }
+
+/* --- Mobile Media Breakpoints --- */
+@media (max-width: 768px) {
+    .gallery-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 16px;
+        padding: 5px;
+    }
+    
+    .gallery-header h1 { font-size: 2rem; }
+    
+    .nav-btn {
+        width: 46px;
+        height: 46px;
+        font-size: 1.1rem;
+    }
+    .prev-btn { left: 12px; }
+    .next-btn { right: 12px; }
+    .close-btn { top: 15px; right: 25px; }
+}
