@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="gallery-header">
+        <h1>Responsive Image Gallery</h1>
+        <p>Click any image to view it full screen.</p>
+        
+        <div class="filter-controls">
+            <button class="filter-btn active" data-filter="all">Show All</button>
+            <button class="filter-btn" data-filter="nature">Nature</button>
+            <button class="filter-btn" data-filter="urban">Urban</button>
+            <button class="filter-btn" data-filter="architecture">Architecture</button>
+        </div>
+    </header>
+
+    <main class="gallery-container">
+        <div class="gallery-item" data-index="0" data-category="nature">
+            <img src="https://picsum.photos/800/600?random=1" alt="Misty Forest">
+            <div class="caption">Misty Forest</div>
+        </div>
+        <div class="gallery-item" data-index="1" data-category="urban">
+            <img src="https://picsum.photos/800/600?random=2" alt="Neon Street">
+            <div class="caption">Neon Street</div>
+        </div>
+        <div class="gallery-item" data-index="2" data-category="architecture">
+            <img src="https://picsum.photos/800/600?random=3" alt="Skyscraper Angles">
+            <div class="caption">Skyscraper Angles</div>
+        </div>
+        <div class="gallery-item" data-index="3" data-category="nature">
+            <img src="https://picsum.photos/800/600?random=4" alt="Desert Dunes">
+            <div class="caption">Desert Dunes</div>
+        </div>
+        <div class="gallery-item" data-index="4" data-category="urban">
+            <img src="https://picsum.photos/800/600?random=5" alt="Subway Terminal">
+            <div class="caption">Subway Terminal</div>
+        </div>
+        <div class="gallery-item" data-index="5" data-category="architecture">
+            <img src="https://picsum.photos/800/600?random=6" alt="Minimalist Facade">
+            <div class="caption">Minimalist Facade</div>
+        </div>
+    </main>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn" aria-label="Close Lightbox">&times;</span>
+        <button class="nav-btn prev-btn" aria-label="Previous Image">&#10094;</button>
+        
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+            <div id="lightbox-caption"></div>
+        </div>
+        
+        <button class="nav-btn next-btn" aria-label="Next Image">&#10095;</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
